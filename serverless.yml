@@ -3,7 +3,7 @@ frameworkVersion: '3'
   	
 plugins:
   - serverless-offline
-
+  - serverless-auto-swagger
 
 provider:
   name: aws
@@ -25,10 +25,18 @@ provider:
     USERS_TABLE: "swapi3"
 
 functions:
-  api:
-    handler: handler.handler
+  create:
+    handler: services/swapi/createItem.createItem
     events:
-      - httpApi: '*'
+    - http: 
+        path: swapi/create/{id}
+        method: post
+  get:
+    handler: services/swapi/getItemById.getItemById
+    events:
+    - http: 
+        path: swapi/get/{id}
+        method: get
 
 resources:
   Resources:
